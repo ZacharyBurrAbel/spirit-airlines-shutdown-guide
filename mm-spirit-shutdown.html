@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   :root {
     --bg: #F7F4EF;
     --surface: #FFFFFF;
@@ -29,9 +29,13 @@
     --blue: #1B5FA8;
     --blue-bg: #EEF4FC;
     --blue-border: #B8D3F0;
-    --accent: #C0392B;
+    --purple: #5B3FA8;
+    --purple-bg: #F2EFFC;
+    --purple-border: #CFC6F5;
   }
-
+ 
+  html { scroll-behavior: smooth; }
+ 
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--bg);
@@ -40,8 +44,17 @@
     line-height: 1.6;
     min-height: 100vh;
   }
-
-  /* HEADER */
+ 
+  .alert-banner {
+    background: var(--red);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .alert-banner strong { font-weight: 600; }
+ 
   .header {
     background: var(--text);
     color: #F7F4EF;
@@ -67,267 +80,208 @@
   }
   .header-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
   .header-eyebrow {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.6rem;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #E8A89F; margin-bottom: 0.6rem;
   }
   .header h1 {
     font-family: 'Instrument Serif', Georgia, serif;
     font-size: clamp(1.8rem, 5vw, 2.8rem);
-    font-weight: 400;
-    line-height: 1.15;
-    color: #F7F4EF;
-    margin-bottom: 0.75rem;
+    font-weight: 400; line-height: 1.15; color: #F7F4EF; margin-bottom: 0.75rem;
   }
   .header h1 em { font-style: italic; color: #E8A89F; }
-  .header-sub {
-    font-size: 14px;
-    color: rgba(247,244,239,0.65);
-    max-width: 520px;
-  }
+  .header-sub { font-size: 14px; color: rgba(247,244,239,0.65); max-width: 520px; }
   .header-date {
-    display: inline-block;
-    margin-top: 1.2rem;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    background: rgba(192,57,43,0.25);
-    color: #E8A89F;
-    padding: 4px 12px;
-    border-radius: 20px;
+    display: inline-block; margin-top: 1.2rem;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+    background: rgba(192,57,43,0.25); color: #E8A89F;
+    padding: 4px 12px; border-radius: 20px;
   }
-
-  /* ALERT BANNER */
-  .alert-banner {
-    background: var(--red);
-    color: #fff;
-    padding: 0.85rem 2rem;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
+ 
+  /* TABLE OF CONTENTS */
+  .toc-wrapper { background: var(--surface); border-bottom: 1px solid var(--border); }
+  .toc-inner { max-width: 900px; margin: 0 auto; padding: 1.25rem; }
+  .toc-eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--hint); margin-bottom: 0.75rem;
   }
-  .alert-banner strong { font-weight: 600; }
-
-  /* MAIN LAYOUT */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0.5rem;
+  }
+  .toc-link {
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none; padding: 0.5rem 0.75rem;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .toc-link:hover { background: var(--surface2); border-color: #C8C3BD; }
+  .toc-num { font-size: 10px; font-weight: 700; color: var(--hint); min-width: 16px; }
+  .toc-text { font-size: 12px; font-weight: 500; line-height: 1.3; }
+ 
+  /* MAIN */
   .main { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-
-  /* SECTION LABELS */
+ 
   .section-label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--hint);
+    font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--hint);
     margin: 2.25rem 0 1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
   }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+ 
   /* STATUS CARDS */
   .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; }
   .status-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.1rem 1.25rem;
-    position: relative;
-    overflow: hidden;
-    transition: box-shadow 0.15s;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.1rem 1.25rem;
+    position: relative; overflow: hidden; transition: box-shadow 0.15s;
   }
   .status-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-  .status-card .stripe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px;
-    height: 100%;
-    border-radius: 14px 0 0 14px;
+  .stripe { position: absolute; top: 0; left: 0; width: 4px; height: 100%; border-radius: 14px 0 0 14px; }
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 0.6rem;
   }
-  .status-card .badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 0.6rem;
-  }
-  .status-card .card-title { font-size: 14px; font-weight: 600; margin-bottom: 0.4rem; color: var(--text); }
-  .status-card .card-body { font-size: 13px; color: var(--muted); line-height: 1.55; }
-
+  .card-title { font-size: 14px; font-weight: 600; margin-bottom: 0.4rem; color: var(--text); }
+  .card-body { font-size: 13px; color: var(--muted); line-height: 1.55; }
+ 
   .green .stripe { background: var(--green); }
   .green .badge { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
   .amber .stripe { background: var(--amber); }
   .amber .badge { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
   .red .stripe { background: var(--red); }
   .red .badge { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
-
-  /* BIG MESSAGE */
+ 
+  /* KEY MESSAGES */
   .key-message {
-    background: var(--text);
-    color: #F7F4EF;
-    border-radius: 16px;
-    padding: 1.5rem 1.75rem;
-    margin-bottom: 0.75rem;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+    background: var(--text); color: #F7F4EF;
+    border-radius: 16px; padding: 1.5rem 1.75rem;
+    margin-bottom: 0.75rem; display: flex; gap: 1rem; align-items: flex-start;
   }
   .key-message .icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-  .key-message .msg-title { font-size: 14px; font-weight: 600; color: #F7F4EF; margin-bottom: 4px; }
-  .key-message .msg-body { font-size: 13px; color: rgba(247,244,239,0.7); line-height: 1.55; }
-
-  /* AIRLINE RESCUE FARES */
-  .airlines-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; }
+  .msg-title { font-size: 14px; font-weight: 600; color: #F7F4EF; margin-bottom: 4px; }
+  .msg-body { font-size: 13px; color: rgba(247,244,239,0.7); line-height: 1.55; }
+ 
+  /* AIRLINE CARDS */
+  .airlines-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.75rem; }
   .airline-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.1rem 1.25rem;
-    transition: box-shadow 0.15s;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.1rem 1.25rem;
+    display: flex; flex-direction: column; transition: box-shadow 0.15s;
   }
   .airline-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-  .airline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+  .airline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.55rem; gap: 8px; }
   .airline-name { font-size: 15px; font-weight: 600; color: var(--text); }
   .deadline-pill {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 20px;
-    white-space: nowrap;
-    flex-shrink: 0;
+    font-size: 10px; font-weight: 600;
+    padding: 3px 9px; border-radius: 20px;
+    white-space: nowrap; flex-shrink: 0;
   }
-  .urgent { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
-  .moderate { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-  .info-pill { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
-  .airline-details { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .urgent   { background: var(--red-bg);    color: var(--red);    border: 1px solid var(--red-border); }
+  .moderate { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-border); }
+  .info-pill{ background: var(--blue-bg);   color: var(--blue);   border: 1px solid var(--blue-border); }
+  .star-pill{ background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+  .airline-details { font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1; }
   .airline-details strong { color: var(--text); font-weight: 500; }
   .airline-action {
-    display: inline-block;
-    margin-top: 0.65rem;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--blue);
-    text-decoration: none;
-    letter-spacing: 0.02em;
+    display: inline-block; margin-top: 0.75rem;
+    font-size: 12px; font-weight: 600; color: var(--blue);
+    text-decoration: none; letter-spacing: 0.02em;
   }
   .airline-action:hover { text-decoration: underline; }
-
+ 
+  /* PROMO CODE */
+  .promo-code {
+    font-family: 'Courier New', monospace; font-size: 13px; font-weight: 700;
+    background: var(--bg); border: 1px dashed var(--border);
+    padding: 2px 9px; border-radius: 6px; color: var(--text); letter-spacing: 0.05em;
+  }
+ 
+  /* FARE TABLE */
+  .fare-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 0.65rem; }
+  .fare-table th {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--hint); padding: 5px 0; border-bottom: 1px solid var(--border); text-align: left;
+  }
+  .fare-table td { padding: 6px 0; border-bottom: 1px solid var(--border); color: var(--muted); }
+  .fare-table td:last-child { font-weight: 600; color: var(--text); text-align: right; }
+  .fare-table tr:last-child td { border-bottom: none; }
+ 
   /* STEPS */
   .steps-list { display: flex; flex-direction: column; gap: 0.65rem; }
   .step {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1rem 1.25rem;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1rem 1.25rem;
+    display: flex; gap: 1rem; align-items: flex-start;
     transition: box-shadow 0.15s;
   }
   .step:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
   .step-num {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--text);
-    color: #F7F4EF;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--text); color: #F7F4EF;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
   }
-  .step-content .step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-  .step-content .step-body { font-size: 13px; color: var(--muted); line-height: 1.55; }
-
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .step-body  { font-size: 13px; color: var(--muted); line-height: 1.55; }
+ 
   /* CONTACTS */
-  .contacts-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
+  .contacts-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .contact-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.8rem 1.25rem; border-bottom: 1px solid var(--border);
+    gap: 1rem; flex-wrap: wrap;
   }
-  .contacts-card .contact-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .contacts-card .contact-row:last-child { border-bottom: none; }
+  .contact-row:last-child { border-bottom: none; }
   .contact-label { font-size: 13px; color: var(--muted); }
-  .contact-value {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--blue);
-    text-decoration: none;
-  }
+  .contact-value { font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; }
   .contact-value:hover { text-decoration: underline; }
-
-  /* SOUTHWEST PRICING TABLE */
-  .sw-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 0.6rem; }
-  .sw-table th { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hint); padding: 6px 0; border-bottom: 1px solid var(--border); text-align: left; }
-  .sw-table td { padding: 7px 0; border-bottom: 1px solid var(--border); color: var(--muted); }
-  .sw-table td:last-child { font-weight: 600; color: var(--text); text-align: right; }
-  .sw-table tr:last-child td { border-bottom: none; }
-
+ 
   /* FOOTER */
   .footer {
-    text-align: center;
-    padding: 2rem 1.25rem;
-    font-size: 12px;
-    color: var(--hint);
-    border-top: 1px solid var(--border);
-    line-height: 1.7;
+    text-align: center; padding: 2rem 1.25rem;
+    font-size: 12px; color: var(--hint);
+    border-top: 1px solid var(--border); line-height: 1.7;
   }
-
+ 
   /* RESPONSIVE */
   @media (max-width: 600px) {
     .header { padding: 1.75rem 1.25rem 1.5rem; }
-    .alert-banner { padding: 0.85rem 1rem; }
-    .status-grid { grid-template-columns: 1fr; }
-    .airlines-grid { grid-template-columns: 1fr; }
+    .alert-banner { padding: 0.85rem 1rem; font-size: 12px; }
+    .status-grid, .airlines-grid { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr 1fr; }
     .contact-row { flex-direction: column; gap: 2px; }
   }
-
+ 
   /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .main > * { animation: fadeUp 0.4s ease both; }
-  .main > *:nth-child(1) { animation-delay: 0.05s; }
-  .main > *:nth-child(2) { animation-delay: 0.1s; }
-  .main > *:nth-child(3) { animation-delay: 0.15s; }
-  .main > *:nth-child(4) { animation-delay: 0.2s; }
-  .main > *:nth-child(5) { animation-delay: 0.25s; }
-  .main > *:nth-child(6) { animation-delay: 0.3s; }
-  .main > *:nth-child(7) { animation-delay: 0.35s; }
-  .main > *:nth-child(8) { animation-delay: 0.4s; }
-  .main > *:nth-child(9) { animation-delay: 0.45s; }
+  .main > *:nth-child(1)  { animation-delay: 0.05s; }
+  .main > *:nth-child(2)  { animation-delay: 0.10s; }
+  .main > *:nth-child(3)  { animation-delay: 0.15s; }
+  .main > *:nth-child(4)  { animation-delay: 0.20s; }
+  .main > *:nth-child(5)  { animation-delay: 0.25s; }
+  .main > *:nth-child(6)  { animation-delay: 0.30s; }
+  .main > *:nth-child(7)  { animation-delay: 0.35s; }
+  .main > *:nth-child(8)  { animation-delay: 0.40s; }
+  .main > *:nth-child(9)  { animation-delay: 0.45s; }
+  .main > *:nth-child(10) { animation-delay: 0.50s; }
+  .main > *:nth-child(11) { animation-delay: 0.55s; }
 </style>
 </head>
 <body>
-
+ 
 <div class="alert-banner">
-  ⚠ <strong>Do not go to the airport.</strong> All Spirit flights are canceled as of May 2, 2026. No staff are available to assist.
+  ⚠ <strong>Do not go to the airport.</strong> All Spirit flights are canceled as of May 2, 2026. No staff are available to assist you.
 </div>
-
+ 
 <div class="header">
   <div class="header-inner">
     <div class="header-eyebrow">Passenger Rights Guide</div>
@@ -336,228 +290,327 @@
     <span class="header-date">Updated May 2, 2026 · All flights canceled</span>
   </div>
 </div>
-
+ 
+<!-- TABLE OF CONTENTS -->
+<div class="toc-wrapper">
+  <div class="toc-inner">
+    <div class="toc-eyebrow">Jump to section</div>
+    <div class="toc-grid">
+      <a class="toc-link" href="#situation">
+        <span class="toc-num">01</span>
+        <span class="toc-text">Your situation by payment type</span>
+      </a>
+      <a class="toc-link" href="#critical">
+        <span class="toc-num">02</span>
+        <span class="toc-text">Critical rules to follow now</span>
+      </a>
+      <a class="toc-link" href="#rescue">
+        <span class="toc-num">03</span>
+        <span class="toc-text">Rescue fares — all airlines</span>
+      </a>
+      <a class="toc-link" href="#checklist">
+        <span class="toc-num">04</span>
+        <span class="toc-text">Action checklist</span>
+      </a>
+      <a class="toc-link" href="#limits">
+        <span class="toc-num">05</span>
+        <span class="toc-text">What you're not entitled to</span>
+      </a>
+      <a class="toc-link" href="#contacts">
+        <span class="toc-num">06</span>
+        <span class="toc-text">Key contacts</span>
+      </a>
+    </div>
+  </div>
+</div>
+ 
 <div class="main">
-
-  <!-- SITUATION OVERVIEW -->
-  <div class="section-label">Your situation — what you paid with matters most</div>
-
+ 
+  <!-- 01 -->
+  <div id="situation" class="section-label">01 — Your situation — what you paid with matters most</div>
   <div class="status-grid">
     <div class="status-card green">
       <div class="stripe"></div>
       <div class="badge">Best position</div>
       <div class="card-title">Paid with a credit card</div>
-      <div class="card-body">Spirit will auto-refund to your card. If that doesn't happen, call your issuer and request a "chargeback" under the Fair Credit Billing Act. Services were not delivered — you have a strong claim. Act within 120 days of your transaction.</div>
+      <div class="card-body">Spirit will auto-refund to your card. If that doesn't happen, call your issuer and request a "chargeback" under the Fair Credit Billing Act — non-delivery of service is a strong claim. Act within 120 days of your transaction date.</div>
     </div>
     <div class="status-card amber">
       <div class="stripe"></div>
       <div class="badge">Some protection</div>
       <div class="card-title">Paid with a debit card</div>
-      <div class="card-body">Protections are weaker but worth trying. Call the number on the back of your debit card and ask about disputing the charge for non-delivery of service. Less likely to succeed than a credit card, but file before going to bankruptcy court.</div>
+      <div class="card-body">Protections are weaker but still worth trying. Call the number on the back of your card and ask about disputing the charge for non-delivery of service. Still better than waiting for bankruptcy court.</div>
     </div>
     <div class="status-card amber">
       <div class="stripe"></div>
       <div class="badge">Third-party booking</div>
       <div class="card-title">Booked via Expedia, Kayak, etc.</div>
-      <div class="card-body">Spirit won't refund you directly. Contact your travel agency or booking platform and ask them to process your refund. Keep your Spirit confirmation number and proof of payment ready.</div>
+      <div class="card-body">Spirit won't refund you directly — contact your travel agency or booking platform to request a refund from them. Keep your Spirit confirmation number and proof of payment ready.</div>
     </div>
     <div class="status-card red">
       <div class="stripe"></div>
       <div class="badge">Uncertain — may not recover</div>
       <div class="card-title">Free Spirit points, vouchers, credits</div>
-      <div class="card-body">Compensation "will be determined at a later date through bankruptcy court." Analysts say odds of recovering loyalty points are slim. You're an unsecured creditor — last in line. File a proof of claim to preserve any rights you have.</div>
+      <div class="card-body">Compensation "will be determined at a later date through bankruptcy court." Analysts say odds of recovering loyalty points are slim. You are an unsecured creditor — last in line. Still file a proof of claim to preserve any rights you have.</div>
     </div>
     <div class="status-card red">
       <div class="stripe"></div>
       <div class="badge">Not covered</div>
-      <div class="card-title">Incidental costs (hotel, meals, car)</div>
-      <div class="card-body">Spirit has explicitly stated it will not reimburse incidental travel costs. Check your travel insurance policy — some cover "insolvency" or "service cessation." Note: policies bought after Spirit's Aug 2025 bankruptcy filing may not qualify.</div>
+      <div class="card-title">Incidental costs — hotel, meals, car</div>
+      <div class="card-body">Spirit will not reimburse any incidental travel costs. If you have travel insurance, ask if your policy covers "insolvency" or "service cessation." Policies bought after Spirit's Aug 2025 bankruptcy filing may be excluded as a known event.</div>
     </div>
   </div>
-
-  <!-- KEY MESSAGES -->
-  <div class="section-label">Critical rules to follow right now</div>
-
+ 
+  <!-- 02 -->
+  <div id="critical" class="section-label">02 — Critical rules to follow right now</div>
+ 
   <div class="key-message">
     <div class="icon">📄</div>
     <div>
       <div class="msg-title">Do not cancel your Spirit booking yourself</div>
-      <div class="msg-body">Canceling on your own removes all your protections. Let Spirit's cancellation stand, then work from that. Keep every confirmation email, receipt, and communication from Spirit — you'll need them for rescue fares and claims.</div>
+      <div class="msg-body">Canceling on your own removes all your legal protections. Let Spirit's cancellation stand, then work from there. Keep every confirmation email, receipt, and communication — you'll need them for rescue fares and chargeback claims.</div>
     </div>
   </div>
-
-  <div class="key-message" style="background: var(--red); margin-top: 0;">
+  <div class="key-message" style="background: var(--red);">
     <div class="icon">⏱</div>
     <div>
-      <div class="msg-title">Act today — most rescue fare windows close within days</div>
-      <div class="msg-body">JetBlue and Southwest offers expire May 6. United's portal runs through May 16. Frontier's promo code expires May 10. Credit card chargeback windows are also time-sensitive. Waiting costs you options.</div>
+      <div class="msg-title">Act today — rescue fare windows are closing fast</div>
+      <div class="msg-body">JetBlue $99 fares expire May 6 · Southwest counter deals expire May 6 · Allegiant promo code expires May 12 · Frontier code expires May 10 · Avelo code expires May 31 · United's portal runs through May 16. Credit card chargeback deadlines are also time-sensitive.</div>
     </div>
   </div>
-
-  <!-- RESCUE FARES -->
-  <div class="section-label">Rescue fares from other airlines</div>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">You'll need your Spirit confirmation number and proof of payment to access these deals.</p>
-
+ 
+  <!-- 03 -->
+  <div id="rescue" class="section-label">03 — Rescue fares — every airline offering help</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Most airlines require your Spirit confirmation number and proof of payment. Windows are closing — act today.</p>
+ 
   <div class="airlines-grid">
-
+ 
     <div class="airline-card">
       <div class="airline-header">
         <div class="airline-name">JetBlue</div>
-        <div class="deadline-pill urgent">Expires May 6</div>
+        <div class="deadline-pill urgent">$99 fares expire May 6</div>
       </div>
       <div class="airline-details">
-        <strong>$99 one-way rescue fares</strong> on matching Spirit routes. Blue Basic fares capped at <strong>$299</strong> from Fort Lauderdale (FLL) and San Juan (SJU) through May 8.<br><br>
-        Call to book: <strong>1-800-538-2583</strong>
+        <strong>$99 one-way rescue fares</strong> on matching Spirit routes, travel through May 6. Blue Basic fares capped at <strong>$299</strong> from Fort Lauderdale (FLL) and San Juan, PR (SJU) through May 8.<br><br>
+        JetBlue is also adding <strong>11 new destinations from Fort Lauderdale</strong> to help backfill Spirit's network long term.<br><br>
+        Must call to book rescue fares: <strong>1-800-538-2583</strong>
       </div>
     </div>
-
+ 
     <div class="airline-card">
       <div class="airline-header">
         <div class="airline-name">Southwest</div>
-        <div class="deadline-pill urgent">Expires May 6</div>
+        <div class="deadline-pill urgent">Expires May 6 · Airport only</div>
       </div>
       <div class="airline-details">
-        Special fares at airport ticket counters only (not online). Bonus: <strong>Spirit Silver/Gold status matched to Southwest A-List.</strong>
+        Walk-up fares at <strong>airport ticket counters only</strong> — not bookable online. Discounted international fares also available. Bonus: <strong>Spirit Silver and Gold status matched to Southwest A-List.</strong>
       </div>
-      <table class="sw-table">
-        <thead><tr><th>Distance</th><th>Fare</th></tr></thead>
+      <table class="fare-table">
+        <thead><tr><th>Flight distance</th><th>One-way fare</th></tr></thead>
         <tbody>
           <tr><td>500 miles or fewer</td><td>$200</td></tr>
-          <tr><td>501–1,000 miles</td><td>$300</td></tr>
+          <tr><td>501 – 1,000 miles</td><td>$300</td></tr>
           <tr><td>Over 1,000 miles</td><td>$400</td></tr>
         </tbody>
       </table>
     </div>
-
+ 
     <div class="airline-card">
       <div class="airline-header">
         <div class="airline-name">United Airlines</div>
         <div class="deadline-pill moderate">Through May 16</div>
       </div>
       <div class="airline-details">
-        MileagePlus members with Spirit flights <strong>May 2–16</strong> can access a dedicated portal to book. Most fares capped at <strong>$199</strong>; longer flights at <strong>$299</strong>. Book online through United's site.
+        MileagePlus members with Spirit flights booked <strong>May 2–16</strong> access a dedicated portal to rebook. Fares capped at <strong>$199 for most routes</strong>, <strong>$299 for longer flights</strong> with connections. Book online.<br><br>
+        United rebooked <strong>14,000 Spirit passengers</strong> within the first 12 hours of the shutdown.
       </div>
-      <a class="airline-action" href="https://www.united.com" target="_blank">→ Book at united.com</a>
+      <a class="airline-action" href="https://www.united.com/specialfares" target="_blank">→ united.com/specialfares</a>
     </div>
-
+ 
     <div class="airline-card">
       <div class="airline-header">
         <div class="airline-name">American Airlines</div>
         <div class="deadline-pill moderate">Limited time</div>
       </div>
       <div class="airline-details">
-        Discounted fares on nonstop routes overlapping Spirit. Book through the AA app or aa.com. American is also looking at adding larger planes on key affected routes.
+        Rescue fares on nonstop routes overlapping Spirit — American covers <strong>70 of Spirit's 72 airports</strong> and <strong>67 of its specific routes</strong>. Also adding larger aircraft and additional flights on key routes. Book via the AA app or aa.com.
       </div>
-      <a class="airline-action" href="https://www.aa.com" target="_blank">→ Book at aa.com</a>
+      <a class="airline-action" href="https://www.aa.com" target="_blank">→ aa.com</a>
     </div>
-
+ 
     <div class="airline-card">
       <div class="airline-header">
         <div class="airline-name">Delta Air Lines</div>
-        <div class="deadline-pill moderate">Near-term travel</div>
+        <div class="deadline-pill moderate">5-day window</div>
       </div>
       <div class="airline-details">
-        Reduced "rescue fares" in markets Spirit served, prioritizing near-term travelers who need to get home. Check delta.com for availability on your route.
+        Reduced <strong>nonrefundable rescue fares</strong> across all domestic Spirit markets — nonstop and one-stop connections via Delta hubs — plus <strong>all U.S.–Latin America routes</strong> where Spirit operated. Check delta.com for your specific route.
       </div>
-      <a class="airline-action" href="https://www.delta.com" target="_blank">→ Book at delta.com</a>
+      <a class="airline-action" href="https://www.delta.com" target="_blank">→ delta.com</a>
     </div>
-
+ 
     <div class="airline-card">
       <div class="airline-header">
         <div class="airline-name">Frontier Airlines</div>
-        <div class="deadline-pill moderate">Book by May 10</div>
+        <div class="deadline-pill moderate">Code expires May 10</div>
       </div>
       <div class="airline-details">
-        Promo code <strong>SAVENOW</strong> gives <strong>10% or 50% off</strong> base fares. Book by May 10, travel by Nov 19, 2026. Higher discount requires Tue/Wed/Sat travel and 21-day advance purchase.
+        Use promo code <span class="promo-code">SAVENOW</span> on <strong>100+ former Spirit routes</strong> plus 9 new routes being added this summer. Travel through Nov 19, 2026.<br><br>
+        Also offering a <strong>GoWild All-You-Can-Fly Summer Pass for $199</strong> (book by May 8 for unlimited summer flights).
       </div>
-      <a class="airline-action" href="https://www.flyfrontier.com" target="_blank">→ Book at flyfrontier.com</a>
+      <table class="fare-table">
+        <thead><tr><th>Travel window</th><th>Fare</th></tr></thead>
+        <tbody>
+          <tr><td>May 2 – Jun 10 (non-peak)</td><td>~$0 + taxes</td></tr>
+          <tr><td>May 2 – Jun 10 (peak dates)</td><td>$99 one-way</td></tr>
+          <tr><td>Jun 11 – Sep 8 (Tue/Wed)</td><td>~$0 + taxes</td></tr>
+          <tr><td>Jun 11 – Sep 8 (other days)</td><td>$49 one-way</td></tr>
+          <tr><td>SAVENOW — 50% off (Tue/Wed/Sat)</td><td>21-day advance</td></tr>
+          <tr><td>SAVENOW — 10% off</td><td>Any day, no advance</td></tr>
+        </tbody>
+      </table>
+      <a class="airline-action" href="https://www.flyfrontier.com" target="_blank">→ flyfrontier.com</a>
     </div>
-
-    <div class="airline-card" style="grid-column: 1 / -1; background: var(--surface2); border-style: dashed;">
+ 
+    <div class="airline-card">
       <div class="airline-header">
-        <div class="airline-name">Also offering assistance</div>
-        <div class="deadline-pill info-pill">Check their sites</div>
+        <div class="airline-name">Allegiant Air</div>
+        <div class="deadline-pill moderate">Book by May 12</div>
       </div>
       <div class="airline-details">
-        <strong>Allegiant, Avelo,</strong> and <strong>Breeze</strong> have also agreed to assist Spirit passengers per the DOT agreement. Check their websites for fare details on routes that overlap Spirit's former network.<br><br>
-        <strong>Hertz</strong> is offering one-way rentals and up to <strong>25% off</strong> for Spirit passengers who need ground transportation as an alternative.
+        Use promo code <span class="promo-code">ALLWAYSTHERE</span> to receive <strong>50% back in Allways Rewards points</strong> on 20+ eligible routes where the carriers overlapped. Effectively offsets cost of future bookings. Travel window: May 2 – July 20, 2026.<br><br>
+        Allegiant is also holding fares steady on all routes where it directly competed with Spirit.
       </div>
+      <a class="airline-action" href="https://www.allegiantair.com" target="_blank">→ allegiantair.com</a>
     </div>
-
+ 
+    <div class="airline-card">
+      <div class="airline-header">
+        <div class="airline-name">Avelo Airlines</div>
+        <div class="deadline-pill info-pill">Buy by May 31</div>
+      </div>
+      <div class="airline-details">
+        Use promo code <span class="promo-code">TRYAVELO</span> for <strong>up to 75% off base fares</strong> on select former Spirit markets. Travel through Nov 17, 2026. Blackout dates apply.<br><br>
+        Bonus: <strong>Free status match to Avelo PLUS</strong> for affected Spirit flyers. SpiritSaver$ Club members can match to Avelo PLUS for a 12-month membership — submit request by May 31, 2026.<br><br>
+        Avelo is also actively hiring former Spirit crew members.
+      </div>
+      <a class="airline-action" href="https://www.avelo.com" target="_blank">→ avelo.com</a>
+    </div>
+ 
+    <div class="airline-card">
+      <div class="airline-header">
+        <div class="airline-name">Avianca</div>
+        <div class="deadline-pill star-pill">Already flew outbound? Free return</div>
+      </div>
+      <div class="airline-details">
+        <strong>Free return flights (airfare waived)</strong> for passengers who already completed the outbound leg of their Spirit trip and hold a return Spirit ticket home. Taxes, fees, and mandatory charges still apply.<br><br>
+        Go to an Avianca airport counter on your scheduled flight day (or one day early) — rebooking handled in order of arrival, space available. Applies to Spirit tickets for travel <strong>May 2–16, 2026</strong>.
+      </div>
+      <a class="airline-action" href="https://www.avianca.com" target="_blank">→ avianca.com</a>
+    </div>
+ 
+    <div class="airline-card" style="background: var(--surface2); border-style: dashed;">
+      <div class="airline-header">
+        <div class="airline-name">Breeze Airways</div>
+        <div class="deadline-pill info-pill">Details pending</div>
+      </div>
+      <div class="airline-details">
+        Included in the DOT's list of participating carriers but has not yet published specific fares or promo codes. Check breeze.com and their social channels for updates.
+      </div>
+      <a class="airline-action" href="https://www.breeze.com" target="_blank">→ breeze.com</a>
+    </div>
+ 
+    <div class="airline-card" style="background: var(--surface2); border-style: dashed;">
+      <div class="airline-header">
+        <div class="airline-name">Hertz (Ground Transport)</div>
+        <div class="deadline-pill info-pill">Limited time</div>
+      </div>
+      <div class="airline-details">
+        If flying isn't an option, Hertz is offering <strong>one-way vehicle rentals</strong> with <strong>up to 25% off</strong> for Spirit passengers. May be the fastest option for shorter distances where driving is realistic.
+      </div>
+      <a class="airline-action" href="https://www.hertz.com" target="_blank">→ hertz.com</a>
+    </div>
+ 
   </div>
-
-  <!-- ACTION CHECKLIST -->
-  <div class="section-label">Your action checklist — in order of priority</div>
-
+ 
+  <!-- 04 -->
+  <div id="checklist" class="section-label">04 — Action checklist — in order of priority</div>
   <div class="steps-list">
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-content">
+      <div>
         <div class="step-title">Save all Spirit documentation immediately</div>
-        <div class="step-body">Screenshot or download your confirmation email, booking receipt, any cancellation notice, and all Spirit correspondence. You'll need proof of your booking to access rescue fares and file claims.</div>
+        <div class="step-body">Screenshot or download your confirmation email, booking receipt, any cancellation notice, and all correspondence with Spirit. You'll need proof of booking to access rescue fares and file claims. The National Consumers League warns that deadlines are strict.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-content">
+      <div>
         <div class="step-title">Do not cancel your Spirit booking yourself</div>
-        <div class="step-body">Let Spirit's cancellation stand. Voluntarily canceling a nonrefundable ticket eliminates your ability to file a chargeback — you must wait for Spirit's cancellation to be on record.</div>
+        <div class="step-body">Let Spirit's cancellation stand. Voluntarily canceling eliminates your ability to file a chargeback — you must wait for Spirit's cancellation to be on record before disputing the charge.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-content">
+      <div>
         <div class="step-title">Check Spirit's refund status page (MyTrips)</div>
-        <div class="step-body">Visit Spirit's website to see if an automatic refund has been initiated. Credit and debit card bookings made directly with Spirit should be refunded automatically to the original payment method.</div>
+        <div class="step-body">Confirm whether an automatic refund has been initiated for your credit or debit card booking. This should happen automatically for direct bookings — but don't assume it has gone through.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-content">
+      <div>
         <div class="step-title">If no refund appears, call your card issuer today</div>
-        <div class="step-body">Tell them you want to dispute a charge for services not delivered (non-delivery of service). This is your right under the Fair Credit Billing Act. The sooner you call, the better — chargeback windows are strict.</div>
+        <div class="step-body">Tell them you want to dispute a charge for non-delivery of service. This is your right under the Fair Credit Billing Act. Chargeback windows typically run 120 days — but the clock may start from the cancellation notice date. Act promptly.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">5</div>
-      <div class="step-content">
+      <div>
         <div class="step-title">Book a new flight if you still need to travel</div>
-        <div class="step-body">Use the rescue fares listed above — they're the cheapest options right now. Also check Google Flights across all airlines. Be flexible on dates, connections, and nearby airports. Summer fares are rising fast.</div>
+        <div class="step-body">Use the rescue fares above — they're the best-priced options right now. Also check Google Flights across all airlines. Be flexible on dates, connections, and nearby airports. Summer fares are rising fast as Spirit's seats vanish from the market.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">6</div>
-      <div class="step-content">
+      <div>
         <div class="step-title">If you paid with points, vouchers, or credits — file a bankruptcy claim</div>
-        <div class="step-body">Contact Epiq, Spirit's claims agent, to file a formal "proof of claim." This preserves whatever recovery rights you may have in the bankruptcy proceedings. Recovery is not guaranteed and may take years.</div>
+        <div class="step-body">Contact Epiq (Spirit's claims agent) to file a formal "proof of claim." This preserves whatever recovery rights you may have. Call 855-952-6606 or email SpiritAirlinesInfo@epiqglobal.com. Recovery is not guaranteed and may take years.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">7</div>
-      <div class="step-content">
+      <div>
         <div class="step-title">Call your travel insurance provider</div>
-        <div class="step-body">Ask specifically if your policy covers "airline insolvency" or "service cessation." If you purchased insurance after Spirit's August 2025 bankruptcy filing, your claim may be denied as a known event. Still worth calling.</div>
+        <div class="step-body">Ask whether your policy covers "airline insolvency" or "service cessation." Policies purchased after Spirit's August 2025 bankruptcy filing may be denied as a known pre-existing event. Still worth calling — some policies do cover it.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">8</div>
-      <div class="step-content">
-        <div class="step-title">File a DOT complaint if your rights are violated</div>
-        <div class="step-body">If you believe your refund rights under federal law are not being honored, file a formal complaint with the U.S. Department of Transportation at dot.gov/airconsumer. The DOT is actively monitoring the situation.</div>
+      <div>
+        <div class="step-title">File a DOT complaint if your rights aren't honored</div>
+        <div class="step-body">If refund rights under federal law are not being honored, file a formal complaint with the U.S. Department of Transportation at transportation.gov/airconsumer. The DOT is actively monitoring the situation.</div>
       </div>
     </div>
   </div>
-
-  <!-- CONTACTS -->
-  <div class="section-label">Key contacts</div>
-
+ 
+  <!-- 05 -->
+  <div id="limits" class="section-label">05 — What you are not entitled to</div>
+  <div class="status-card red" style="border-radius:14px; margin-bottom:0.75rem;">
+    <div class="stripe"></div>
+    <div class="card-title" style="margin-bottom:0.4rem;">No compensation beyond your ticket price</div>
+    <div class="card-body">Under current U.S. law, airlines are not required to compensate passengers for inconvenience or disruption caused by a shutdown — only the cost of the ticket itself if the flight was canceled. Spirit has explicitly stated it cannot reimburse incidental travel costs such as hotels, meals, or alternative transportation. No additional compensation scheme is in place beyond refunds.</div>
+  </div>
+ 
+  <!-- 06 -->
+  <div id="contacts" class="section-label">06 — Key contacts</div>
   <div class="contacts-card">
     <div class="contact-row">
       <span class="contact-label">Epiq — bankruptcy claims agent (US/Canada toll-free)</span>
       <a class="contact-value" href="tel:8559526606">855-952-6606</a>
     </div>
     <div class="contact-row">
-      <span class="contact-label">Epiq — international</span>
+      <span class="contact-label">Epiq — international callers</span>
       <a class="contact-value" href="tel:9717152831">971-715-2831</a>
     </div>
     <div class="contact-row">
@@ -565,35 +618,30 @@
       <a class="contact-value" href="mailto:SpiritAirlinesInfo@epiqglobal.com">SpiritAirlinesInfo@epiqglobal.com</a>
     </div>
     <div class="contact-row">
-      <span class="contact-label">JetBlue rescue fares booking line</span>
+      <span class="contact-label">JetBlue — call to book $99 rescue fares</span>
       <a class="contact-value" href="tel:18005382583">1-800-538-2583 (1-800-JETBLUE)</a>
     </div>
     <div class="contact-row">
-      <span class="contact-label">DOT air consumer complaints</span>
+      <span class="contact-label">United — dedicated Spirit rebooking portal</span>
+      <a class="contact-value" href="https://www.united.com/specialfares" target="_blank">united.com/specialfares</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">U.S. DOT — air consumer complaints</span>
       <a class="contact-value" href="https://www.transportation.gov/airconsumer" target="_blank">transportation.gov/airconsumer</a>
     </div>
     <div class="contact-row">
-      <span class="contact-label">Spirit Airlines refund status page</span>
-      <a class="contact-value" href="https://www.spirit.com" target="_blank">spirit.com (MyTrips)</a>
+      <span class="contact-label">Spirit Airlines — refund status (MyTrips)</span>
+      <a class="contact-value" href="https://www.spirit.com" target="_blank">spirit.com</a>
     </div>
   </div>
-
-  <!-- WHAT YOU'RE NOT ENTITLED TO -->
-  <div class="section-label">What you are not entitled to</div>
-
-  <div class="status-card red" style="border-radius:14px; margin-bottom: 0.75rem;">
-    <div class="stripe"></div>
-    <div class="card-title" style="margin-bottom:0.4rem;">No extra compensation beyond your ticket price</div>
-    <div class="card-body">Under current U.S. law, airlines are not required to compensate passengers for inconvenience, delays, or disruption caused by a shutdown. You can reclaim the cost of your ticket, but there is no entitlement to additional payments. Spirit has explicitly stated it cannot reimburse incidental travel costs.</div>
-  </div>
-
+ 
 </div>
-
+ 
 <div class="footer">
-  <p>Information current as of <strong>May 2, 2026</strong>. Rescue fare windows are closing fast — act today.</p>
+  <p>Information current as of <strong>May 2, 2026</strong>. Rescue fare windows are closing — act today.</p>
   <p style="margin-top:4px;">This guide is for informational purposes only. Consult your card issuer, travel insurer, or an attorney for advice specific to your situation.</p>
-  <p style="margin-top:8px; color: #C0BDB8;">Sources: U.S. DOT, CBS News, PBS News, NerdWallet, The Points Guy, NPR, NBC News</p>
+  <p style="margin-top:8px; color: #C0BDB8;">Sources: U.S. DOT · CBS News · PBS NewsHour · NerdWallet · The Points Guy · Upgraded Points · Doctor of Credit · Frontier Airlines press release · Avianca · Simple Flying · Rough Draft Atlanta</p>
 </div>
-
+ 
 </body>
 </html>
